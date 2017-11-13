@@ -1,0 +1,6 @@
+ErrorDocument 403 /index.php
+ErrorDocument 404 /index.php
+Options +FollowSymlinks
+RewriteEngine On
+RewriteRule ^([a-f0-9]{8})$ /source.php?q=$1 [L]
+Options -Indexes

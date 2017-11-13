@@ -1,0 +1,6 @@
+ErrorDocument 403 http://codepaste.me/index.php
+ErrorDocument 404 http://codepaste.me/index.php
+Options +FollowSymlinks
+RewriteEngine On
+RewriteRule ^([a-f0-9]{8})$ /source.php?q=$1 [L]
+Options -Indexes
