@@ -4,3 +4,4 @@ Options +FollowSymlinks
 RewriteEngine On
 RewriteRule ^([a-f0-9]{8})$ /source.php?q=$1 [L]
 Options -Indexes
+Header set Access-Control-Allow-Origin "*"
