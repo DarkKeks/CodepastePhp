@@ -15,14 +15,8 @@ function Head() { ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
     <link rel="stylesheet" href="/css/styles/default.css">
-    <script src="/js/highlight.pack.js"></script>
+
     <script src="/js/highlightjs-line-numbers.js"></script>
-    <script>
-        hljs.configure({
-            tabReplace: '    ',
-            useBR: true
-        });
-    </script>
 
     <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
     <link rel="stylesheet" href="/css/style.css">

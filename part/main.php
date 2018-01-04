@@ -52,8 +52,6 @@ function Main() { ?>
         </div>
     </div>
 
-
-
     <script>
         function submit() {
             var source = $('.code-area').val(),
@@ -65,7 +63,8 @@ function Main() { ?>
                 data: {
                     source: source,
                     name: name,
-                    lang: lang
+                    lang: lang,
+                    flag: 'bot'
                 },
                 type: "post",
                 dataType: "json",
@@ -111,9 +110,7 @@ function Main() { ?>
         });
 
 
-        $(enableTabIndentation);
-
-        function enableTabIndentation(){
+        $(function enableTabIndentation() {
             $('.code-area').on('keydown', function(e) {
                 var keyCode = e.keyCode || e.which;
 
@@ -131,6 +128,6 @@ function Main() { ?>
                         $(this).get(0).selectionEnd = start + 1;
                 }
             });
-        }
+        });
     </script>
 <?php }

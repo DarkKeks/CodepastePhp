@@ -16,7 +16,6 @@ function Source() {
                     <div class="cssload-square">
                         <div class="cssload-square">
                             <div class="cssload-square"><div class="cssload-square">
-
                                 </div></div>
                         </div>
                     </div>
@@ -89,7 +88,7 @@ function Source() {
             <pre><code class="code hljs"></code></pre>
         </div>
         <h3 class="text-center header-text">
-            <a href="#" onclick="goToRaw()">
+            <a class="raw-link" href="#">
                 <span class="link glyphicon glyphicon-link" aria-hidden="true"></span>
             </a>
             Raw code
@@ -101,34 +100,51 @@ function Source() {
 
     <script>
         $(function() {
-            var result = {};
-            if(source.lang === 'auto') {
-                result = hljs.highlightAuto(source.source);
-            } else {
-                result = hljs.highlight(source.lang, source.source, true);
+            $('.raw').val(source.source);
+            $('.header-text').first().text(source.name);
+            $('.raw-link').attr('href', 'http://raw.codepaste.me/' + source.alias);
+
+            if(source.flag === 'bot') {
+                $('.header-text').first().append($('<sup>')
+                    .addClass('through-bot')
+                    .append($('<a>', {
+                            'href': 'https://telegram.me/codepaste_bot',
+                            'target': '_blank'
+                        })
+                        .append($('<img>', {
+                            'src': '/css/telegram-icon.png'
+                        }))
+                        .append('bot')
+                    ));
             }
 
-            $('.raw').val(source.source);
-            $('.code').html(result.value).each(function(i, block) {
-                hljs.lineNumbersBlock(block);
-            });
-            $('.header-text').first().text(source.name);
-
-            var rowCount = $('.hljs-ln-numbers').length;
-            if(rowCount === 0) rowCount = 1;
-            $('.raw').attr('rows', Math.min(rowCount, 20));
-
-
-            $('.cssload-loader').addClass("disabled");
-            $('.cssload-square').addClass("disabled");
-            setTimeout(function() {
-                $('.cssload-loader').hide();
-            }, 500);
-
+            highlight(source);
         });
 
-        function goToRaw() {
-            location.href = 'http://raw.codepaste.me/' + source.alias;
+        function highlight(source) {
+            var worker = new Worker('/js/highlightjs-worker.js');
+            worker.onmessage = function(event) {
+                var result = event.data;
+
+                $('.code').html(result.value).each(function(i, block) {
+                    hljsNumbers.lineNumbersBlock(block);
+                });
+
+                var rowCount = $('.hljs-ln-numbers').length;
+                if(rowCount === 0) rowCount = 1;
+                $('.raw').attr('rows', Math.min(rowCount, 20));
+
+
+                setTimeout(function() {
+                    $('.cssload-loader').addClass("disabled");
+                    $('.cssload-square').addClass("disabled");
+                    setTimeout(function() {
+                        $('.cssload-loader').hide();
+                    }, 250);
+                }, 50);
+
+            };
+            worker.postMessage(source);
         }
     </script>
 
