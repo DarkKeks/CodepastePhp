@@ -82,6 +82,6 @@
 
     function getLines(text) {
         if (text.length === 0) return [];
-        return text.split(/\r\n|\r|\n/g);
+        return text.split(/\r\n|\r|\n|<br\/?>/g);
     }
 }(window));
