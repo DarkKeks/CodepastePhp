@@ -12,6 +12,7 @@ onmessage = function(event) {
     } else {
         result = self.hljs.highlight(source.lang, source.source, true);
     }
+    result.value = self.hljs.fixMarkup(result.value);
 
     postMessage(result);
 };
