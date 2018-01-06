@@ -63,8 +63,7 @@ function Main() { ?>
                 data: {
                     source: source,
                     name: name,
-                    lang: lang,
-                    flag: 'bot'
+                    lang: lang
                 },
                 type: "post",
                 dataType: "json",
