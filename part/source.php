@@ -123,17 +123,15 @@ function Source() {
 
         function highlight(source) {
             var worker = new Worker('/js/highlightjs-worker.js');
-            worker.onmessage = function(event) {
-                var result = event.data;
 
-                $('.code').html(result.value).each(function(i, block) {
+            worker.onmessage = function (ev) {
+                $('.code').html(ev.data).each(function(i, block) {
                     hljsNumbers.lineNumbersBlock(block);
                 });
 
                 var rowCount = $('.hljs-ln-numbers').length;
                 if(rowCount === 0) rowCount = 1;
                 $('.raw').attr('rows', Math.min(rowCount, 20));
-
 
                 setTimeout(function() {
                     $('.cssload-loader').addClass("disabled");
@@ -142,9 +140,8 @@ function Source() {
                         $('.cssload-loader').hide();
                     }, 250);
                 }, 50);
-
             };
-            worker.postMessage(source);
+            worker.postMessage(JSON.stringify(source));
         }
     </script>
 
