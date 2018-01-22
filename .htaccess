@@ -1,6 +1,11 @@
 ErrorDocument 403 /index.php
 ErrorDocument 404 /index.php
 Options +FollowSymlinks
-RewriteEngine On
-RewriteRule ^([a-f0-9]{8})$ /source.php?q=$1 [L]
 Options -Indexes
+
+RewriteEngine On
+
+RewriteRule ^([a-f0-9]{8})$ /source.php?q=$1 [L]
+
+RewriteCond %{HTTP_HOST} ^(raw)\.(.*)$ [NC]
+RewriteRule ^(.*)/(.*)$ http://codepaste.me/raw/$1 [R=301,NC,L] [L]
